@@ -147,7 +147,6 @@ def cad_login():
 
         for row in c.execute(sql, (user,)):
             hu3 = row
-
             if hu3 == auth:
                 lb_result['text'] = 'Logado Com Sucesso!\n Digite novo User e Senha'
                 lb_result['fg'] = 'green'
@@ -155,7 +154,6 @@ def cad_login():
                 et_passw.delete(0, END)
                 bt_confirm['command'] = cad_confirm
                 bt_confirm['text'] = 'Cadastrar'
-
             else:
                 lb_result['text'] = 'Usuario ou Senha Incorretos!'
                 lb_result['fg'] = 'red'
