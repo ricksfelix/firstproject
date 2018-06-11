@@ -17,6 +17,7 @@ cad_none = ('', '', '', '', '')
 # Menu
 
 def cadastrar():
+    gui.title('Cadastrar Produtos')
     id = et_id.get()
     name = et_name.get()
     price = et_price.get()
@@ -28,8 +29,6 @@ def cadastrar():
     con.commit()
     lb_result['text'] = 'Cadastrado Com Sucesso!'
     lb_result['fg'] = 'green'
-
-    '''
     if cad == cad_none:
         lb_result['text'] = 'Preencha os Formularios'
         lb_result['fg'] = 'red'
@@ -46,9 +45,9 @@ def cadastrar():
                 con.commit()
                 lb_result['text'] = 'Cadastrado Com Sucesso!'
                 lb_result['fg'] = 'green'
-'''
 
 def sistema():
+    gui.title('Sistema')
     lb_user.grid(row=0,columnspan=2)
     menu_time.grid(row=1, columnspan=2)
     bt1.destroy()
@@ -68,26 +67,37 @@ def prod_cadastro():
     lb_price.grid(row=5, column=0)
     lb_quant.grid(row=6, column=0)
     lb_val.grid(row=7, column=0)
-
     et_id.grid(row=3, column=1)
     et_name.grid(row=4, column=1)
     et_price.grid(row=5, column=1)
     et_quant.grid(row=6, column=1)
     et_val.grid(row=7, column=1)
-
     bt1.grid(row=8, columnspan=3)
-
     bt2.destroy()
     bt3.destroy()
     bt4.destroy()
     print('OK')
 
 def estoque():
-    print('OK')
+    gui.title('Consulta de Estoque')
+    bt1.destroy()
+    bt2.destroy()
+    bt3.destroy()
+    bt4.destroy()
+    menu_time.grid(row=1, column=0, sticky=W)
+    lb_estoque.grid(row=2, column=0, sticky=W)
+    et_estoque.grid(row=2, column=1, sticky=E)
+    bt_estoque.grid(row=2, column=2, sticky=E)
+    tx_prod.grid(row=3, columnspan=3)
+    c.execute("""
+    SELECT * FROM Produtos;
+    """)
     for estoque in c.fetchall():
+        #tx_prod.insert(estoque)
+        tx_prod.insert(INSERT, estoque)
         print(estoque)
-
 def movimentacao():
+    gui.title('Movimentação')
     print('OK')
 
 def menu():
@@ -242,12 +252,16 @@ lb_price = Label(gui, text='Valor do produto:')
 lb_quant = Label(gui, text='Quantidade do produto:')
 lb_val = Label(gui, text='Validade do produto:')
 
+lb_estoque = Label(gui, text='Digite o Codigo do Produto')
+et_estoque = Entry(gui)
+bt_estoque = Button(gui, text='Pesquisar')
+
 et_id = Entry(gui)
 et_name = Entry(gui)
 et_price = Entry(gui)
 et_quant = Entry(gui)
 et_val = Entry(gui)
-
+tx_prod = Text(gui)
 gui.mainloop()
 
 '''
